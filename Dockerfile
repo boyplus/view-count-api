@@ -15,6 +15,7 @@ RUN npm run build
 FROM node:14-alpine
 WORKDIR /app
 COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/public /app/public
 COPY --from=builder /app/dist /app/dist
 
 EXPOSE 5050
