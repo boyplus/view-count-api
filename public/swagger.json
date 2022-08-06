@@ -5,7 +5,28 @@
 		"parameters": {},
 		"requestBodies": {},
 		"responses": {},
-		"schemas": {},
+		"schemas": {
+			"SignupRequestDto": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
 		"securitySchemes": {
 			"jwt": {
 				"type": "apiKey",
@@ -24,7 +45,7 @@
 	},
 	"openapi": "3.0.0",
 	"paths": {
-		"/admin/register": {
+		"/auth/register": {
 			"post": {
 				"operationId": "Register",
 				"responses": {
@@ -40,7 +61,7 @@
 					}
 				},
 				"tags": [
-					"Admin"
+					"Auth"
 				],
 				"security": [],
 				"parameters": [],
@@ -49,19 +70,7 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"properties": {
-									"password": {
-										"type": "string"
-									},
-									"email": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"password",
-									"email"
-								],
-								"type": "object"
+								"$ref": "#/components/schemas/SignupRequestDto"
 							}
 						}
 					}
