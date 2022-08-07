@@ -25,6 +25,22 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"SigninRequestDto": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -54,7 +70,15 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "string"
+									"properties": {
+										"token": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"token"
+									],
+									"type": "object"
 								}
 							}
 						}
@@ -71,6 +95,46 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/SignupRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"201": {
+						"description": "Admin Login",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"token": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"token"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SigninRequestDto"
 							}
 						}
 					}
