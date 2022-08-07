@@ -2,12 +2,19 @@ import express, { Express } from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import swaggerUi from 'swagger-ui-express';
-import errorHandler from 'api-error-handler';
 import CORS from 'cors';
 
 import Routes from './routes';
 
 const app: Express = express();
+
+declare global {
+  namespace Express {
+    interface Request {
+      user: { id: string };
+    }
+  }
+}
 
 app.use(
   CORS({
@@ -19,7 +26,6 @@ app.use(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(errorHandler());
 
 app.use('/api', Routes);
 

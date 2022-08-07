@@ -1,6 +1,6 @@
 import { Controller, Get, SuccessResponse } from 'tsoa';
 
-import { AppDataSource } from '../database/dataSource';
+import { AppDataSource } from '../database/data-source';
 import { Admin } from '../entity';
 
 export default class TestController extends Controller {

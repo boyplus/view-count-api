@@ -1,4 +1,14 @@
-import { Body, Controller, Post, SuccessResponse, Tags, Route } from 'tsoa';
+import {
+  Body,
+  Controller,
+  Post,
+  SuccessResponse,
+  Tags,
+  Route,
+  Request,
+  Security,
+  Get,
+} from 'tsoa';
 import { v4 as uuidv4 } from 'uuid';
 import { hash, compare } from 'bcryptjs';
 
@@ -83,6 +93,19 @@ export default class AuthController extends Controller {
       );
 
       return { token };
+    } catch (error: any) {
+      if (error instanceof ApiError) throw error;
+      else throw new ApiError(500, error);
+    }
+  }
+
+  @Security('jwt')
+  @Get('/profile')
+  public async getProfile(@Request() req: any): Promise<Admin> {
+    try {
+      const admin = await Admin.findOne({ where: { id: req.user.id } });
+      if (!admin) throw new ApiError(401, 'Unauthorized');
+      return admin;
     } catch (error: any) {
       if (error instanceof ApiError) throw error;
       else throw new ApiError(500, error);

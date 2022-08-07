@@ -11,6 +11,7 @@ import { SigninRequestDto } from '../controllers/auth/dto/signin-request.dto';
 // Erorr handling
 import { ApiError } from '../utils/ApiError';
 import dtoValidationMiddleware from '../utils/Validator';
+import AuthMiddleware from '../middlewares/auth-middleware';
 
 const Router = express.Router();
 
@@ -43,5 +44,14 @@ Router.post(
     }
   }
 );
+
+Router.get('/profile', AuthMiddleware, async (req: Request, res: Response) => {
+  try {
+    const profile = await authController.getProfile(req);
+    res.send(profile);
+  } catch (error: any) {
+    res.status(error.statusCode).send({ message: error.message });
+  }
+});
 
 export default Router;
